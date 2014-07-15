@@ -7,7 +7,11 @@ class Deck
     @cards = []
     create_deck
     shuffle
-    sample
+    deal_five_cards
+  end
+
+  def deal_five_cards
+    @cards.sample(5)
   end
 
   private
@@ -23,10 +27,6 @@ class Deck
 
   def shuffle
     @cards.shuffle!
-  end
-
-  def sample
-    self.sample(5)
   end
 
   # def deal
