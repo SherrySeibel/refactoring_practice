@@ -1,18 +1,18 @@
 require "csv"
 
 class HotelFinder
-  def initialize(hotel_database)
-    @hotel_database = hotel_database
+  def initialize(file_name)
+    @file_name = file_name
   end
 
-  def find_hotel
+  def find_hotels
     display_hotel_name
   end
 
   private
 
   def display_hotel_name
-    hotel_list = CSV.foreach(@hotel_database, headers: true) do |row|
+    CSV.foreach(@file_name, headers: true) do |row|
       puts row["Hotel"]
     end
   end
