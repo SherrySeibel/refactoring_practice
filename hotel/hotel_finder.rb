@@ -1,5 +1,4 @@
 require "csv"
-# require "pp"
 
 class HotelFinder
   def initialize(hotel_database)
@@ -9,23 +8,17 @@ class HotelFinder
 
   def find_hotel
     display_hotel_name
-    # hotel_query
   end
 
   private
 
   def display_hotel_name
     hotel_list = CSV.foreach(@hotel_database, headers: true) do |row|
-      puts row["Hotel"]
+      @hotels[row.fields[0]] = Hash[row.headers[1..-1]]
     end
   end
 
-  # def hotel_query
-  #   print "What property? > "
-  #   user_query = gets.chomp
-  #   @hotels.map { |hotel, info| hotel }
-  #   # puts user_query
-  # end
+  puts @hotels
 end
 
 hotel_finder = HotelFinder.new("hotels.csv")
