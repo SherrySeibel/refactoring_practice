@@ -2,7 +2,6 @@ require "./game_rules"
 
 class RockPaperScissor
   def initialize
-    @game_rules = GameRules.new
     @ai_move = %w{R P S}.sample
     @players_move = ""
   end
@@ -21,6 +20,7 @@ class RockPaperScissor
       else
         puts "AI played #{@ai_move}"
       end
+      @game_rules = GameRules.new
       @game_rules.tied_game
       @game_rules.player_victory
       @game_rules.ai_victory

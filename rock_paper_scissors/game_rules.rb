@@ -1,6 +1,6 @@
 class GameRules
   def initialize
-    @ai_move = %w{R P S}.sample
+    @ai_move = ""
     @players_move = ""
   end
 
