@@ -10,7 +10,6 @@ class HotelFinder
       puts row["Hotel"]
     end
   end
-
 end
 
 hotel_finder = HotelFinder.new("hotels.csv")
