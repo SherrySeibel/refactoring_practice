@@ -1,10 +1,17 @@
-require "./game_rules"
+require "./ai"
+require "./player"
 
 class RockPaperScissor
   def initialize
-    @ai_move = %w{R P S}.sample
-    @players_move = ""
+    @ai = Ai.new
+    @player = Player.new
   end
+
+  PLAYER_VS_AI_RULES = {
+    "R" => { "R" => "Player ties AI", "P" => "Player wins", "S" => "AI wins" },
+    "P" => { "R" => "AI wins", "P" => "Player ties AI", "S" => "Player wins" },
+    "S" => { "R" => "Player wins", "P" => "AI wins", "S" => "Player ties AI" }
+  }
 
   def play
     game_loop
@@ -14,22 +21,30 @@ class RockPaperScissor
 
   def game_loop
     loop do
-      display_prompt_and_get_players_move
-      if @players_move == "Q"
+      display_prompt
+      turn = @player.turn
+
+      if turn == "Q"
         break
       else
-        puts "AI played #{@ai_move}"
+        randomized_ai_move
+        determine_winner(turn)
       end
-      @game_rules = GameRules.new
-      @game_rules.tied_game
-      @game_rules.player_victory
-      @game_rules.ai_victory
     end
   end
 
-  def display_prompt_and_get_players_move
+  def display_prompt
     print "Your move? (R/P/S or q to quit) > "
-    @players_move = gets.chomp.upcase
+  end
+
+  def randomized_ai_move
+    puts "AI played #{@ai.turn}"
+  end
+
+  def determine_winner(player_turn)
+    # puts PLAYER_VS_AI_RULES[@player.turn]
+    # p @player.turn
+    puts PLAYER_VS_AI_RULES[player_turn][@ai.turn]
   end
 end
 
