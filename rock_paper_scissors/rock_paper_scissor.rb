@@ -8,9 +8,9 @@ class RockPaperScissor
   end
 
   PLAYER_VS_AI_RULES = {
-    "R" => { "R" => "Player ties AI", "P" => "Player wins", "S" => "AI wins" },
-    "P" => { "R" => "AI wins", "P" => "Player ties AI", "S" => "Player wins" },
-    "S" => { "R" => "Player wins", "P" => "AI wins", "S" => "Player ties AI" }
+    "R" => { "R" => "Player ties AI", "P" => "AI wins", "S" => "Player wins" },
+    "P" => { "R" => "Player wins", "P" => "Player ties AI", "S" => "AI wins" },
+    "S" => { "R" => "AI wins", "P" => "Player wins", "S" => "Player ties AI" }
   }
 
   def play
@@ -22,13 +22,13 @@ class RockPaperScissor
   def game_loop
     loop do
       display_prompt
-      turn = @player.turn
+      player_turn = @player.turn
 
-      if turn == "Q"
+      if player_turn == "Q"
         break
       else
-        randomized_ai_move
-        determine_winner(turn)
+        ai_turn = randomized_ai_move
+        determine_winner(player_turn, ai_turn)
       end
     end
   end
@@ -38,13 +38,13 @@ class RockPaperScissor
   end
 
   def randomized_ai_move
-    puts "AI played #{@ai.turn}"
+    ai_turn = @ai.turn
+    puts "AI played #{ai_turn}"
+    ai_turn
   end
 
-  def determine_winner(player_turn)
-    # puts PLAYER_VS_AI_RULES[@player.turn]
-    # p @player.turn
-    puts PLAYER_VS_AI_RULES[player_turn][@ai.turn]
+  def determine_winner(player_turn, ai_turn)
+    puts PLAYER_VS_AI_RULES[player_turn][ai_turn]
   end
 end
 
