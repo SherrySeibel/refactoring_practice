@@ -1,5 +1,5 @@
-# require "./ai"
-# require "./player"
+require "./ai"
+require "./player"
 
 class GameRules
   def initialize
@@ -8,20 +8,44 @@ class GameRules
   end
 
   PLAYER_VS_AI_RULES = {
-    "R" => { "R" => "Player ties AI", "P" => "Player wins", "S" => "AI wins" },
-    "P" => { "R" => "AI wins", "P" => "Player ties AI", "S" => "Player wins" },
-    "S" => { "R" => "Player wins", "P" => "AI wins", "S" => "Player ties AI" }
+    "R" => { "R" => "Player ties AI", "P" => "AI wins", "S" => "Player wins" },
+    "P" => { "R" => "Player wins", "P" => "Player ties AI", "S" => "AI wins" },
+    "S" => { "R" => "AI wins", "P" => "Player wins", "S" => "Player ties AI" }
   }
 
-  def initialize
+  def implement_rules
+    game_loop
     determine_winner
+    randomized_ai_move
   end
 
   private
 
-  def determine_winner(player_turn)
-    PLAYER_VS_AI_RULES[player_turn][@ai.turn]
+  def game_loop
+    loop do
+      display_prompt
+      player_turn = @player.turn
+
+      if player_turn == "Q"
+        break
+      else
+        ai_turn = randomized_ai_move
+        determine_winner(player_turn, ai_turn)
+      end
+    end
+  end
+
+  def display_prompt
+    print "Your move? (R/P/S or q to quit) > "
+  end
+
+  def determine_winner(player_turn, ai_turn)
+    puts PLAYER_VS_AI_RULES[player_turn][ai_turn]
+  end
+
+  def randomized_ai_move
+    ai_turn = @ai.turn
+    puts "AI played #{ai_turn}"
+    ai_turn
   end
 end
-
-# GameRules.new.determine_winner
